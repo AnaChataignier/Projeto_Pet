@@ -1,0 +1,46 @@
+{% extends 'galeria/base.html' %}
+{% load static %}
+{% block content %}
+            <section class="conteudo">
+                
+                <section class="tags">
+                    <p class="tags__titulo">Busque Categoria:</p>
+                    <ul class="tags__lista">
+                        <li class="tags__tag" ><a href= "{% url 'filtro' 'GATO' %}" class='btn' style='color: #C9C9C9;'>Gato</a></li>
+                        <li class="tags__tag"><a href= "{% url 'filtro' 'CACHORRO' %}" class='btn' style='color: #C9C9C9;'>Cachorro</a></li>
+                        <li class="tags__tag"><a href= "{% url 'filtro' 'PÁSSAROS' %}" class='btn' style='color: #C9C9C9;'>Pássaros</a></li>
+                        <li class="tags__tag"><a href= "{% url 'filtro' 'OUTROS' %}" class='btn' style='color: #C9C9C9;'>Outros</a></li>
+                    </ul>
+                </section>
+                <section class="galeria">
+                    <div class="cards">
+                        <h2 class="cards__titulo">Pets cadastrados</h2>
+                        <ul class="cards__lista">
+                            {% if cards %}
+                            {% for pet in cards %}
+                            <li class="card">
+                                <a href="{% url 'imagem' pet.id %}">
+                                {% if pet.foto == "" or pet.foto == null %}
+                                    <img class="card__imagem" src="{% static '/assets/imagens/galeria/not-found.png'%}" alt="foto" width ="200">
+                                {% else %}
+                                    <img class="card__imagem" src="{{ pet.foto.url }}" alt="foto">
+                                {% endif %}
+                                </a>
+                                <span class="card__tag">{{pet.categoria}}</span>
+                                <div class="card__info">
+                                    <p class="card__titulo">{{pet.nome}}</p>
+                                    <div class="card__texto">
+                                        <h1 class="card__descricao">{{pet.descricao}}</h1>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            {% else %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+{% endblock %}

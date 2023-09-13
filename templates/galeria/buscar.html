@@ -1,0 +1,50 @@
+{% extends 'galeria/base.html' %}
+{% load static %}
+{% block content %}
+            <section class="conteudo">
+                <section class="tags">
+                    <p class="tags__titulo">Busque Categoria:</p>
+                    <ul class="tags__lista">
+                        <li class="tags__tag">Gato</li>
+                        <li class="tags__tag">Cachorro</li>
+                        <li class="tags__tag">Piriquito</li>
+                        <li class="tags__tag">Outros</li>
+                    </ul>
+                </section>
+                <section class="galeria">
+                    <div class="cards">
+                        <ul class="cards__lista">
+                            {% if cards %}
+                            {% for pet in cards %}
+                            <li class="card">
+                                <a href="{% url 'imagem' pet.id %}">
+                                {% if pet.foto == "" or pet.foto == null %}
+                                    <img class="card__imagem" src="{% static '/assets/imagens/galeria/not-found.png'%}" alt="foto">
+                                {% else %}
+                                    <img class="card__imagem" src="{{ pet.foto.url }}" alt="foto">
+                                {% endif %}
+                                </a>
+                                <span class="card__tag">{{pet.categoria}}</span>
+                                <div class="card__info">
+                                    <p class="card__titulo">{{pet.nome}}</p>
+                                    <div class="card__texto">
+                                        <p class="card__descricao">{{pet.descricao}}</p>
+                                        <span>
+                                            <img src="{% static '/assets/ícones/1x/favorite_outline.png' %}" alt="ícone de coração">
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            {% else %}
+                            <div class="imagem__texto">
+                                <p>Pet não encontrado</p>
+                            </div>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+{% endblock %}
